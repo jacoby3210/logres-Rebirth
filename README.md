@@ -1,6 +1,6 @@
-# Королевства Логреса: Возрождение — web prototype (Stage 3 FINAL)
+# Королевства Логреса: Возрождение 
 
-Одностраничная **веб-игра** (Canvas + ES Modules), вдохновлённая Heroes III.
+Одностраничная **веб-игра** (Canvas + ES Modules), вдохновлённая Heroes of Might and Magic III.
 Запускается без Unity/WebSim и без сборки.
 
 ## Быстрый запуск
