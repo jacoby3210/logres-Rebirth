@@ -1,0 +1,64 @@
+html,body{overflow:hidden;height:100%;margin:0;background:#0d0f12;color:#e8edf2;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+
+/* Layout: HUD is outside the canvas, so it never blocks the map. */
+#layout{display:flex;gap:10px;justify-content:stretch;align-items:stretch;height:100%;padding:10px;box-sizing:border-box}
+/* Sidebar auto-sizing:
+   - Default: comfortable width.
+   - Very wide screens: sidebar shrinks a bit so the map can scale up more.
+*/
+#sidebar{width:clamp(220px, 22vw, 320px);display:flex;flex-direction:column;gap:10px;overflow:auto;max-height:calc(100vh - 20px)}
+#stage{display:flex;align-items:center;justify-content:center;flex:1 1 auto;min-width:0;overflow:hidden;position:relative;background:#12151b;border:1px solid rgba(255,255,255,0.12);border-radius:12px}
+#game{display:block;max-width:100%;max-height:100%;background:#12151b;border-radius:12px}
+
+@media (max-width: 980px){
+  #layout{flex-direction:column;align-items:center}
+  #sidebar{width:min(960px, calc(100vw - 20px));max-width:100%;max-height:unset}
+}
+
+/* Ultra-wide screens: keep HUD compact so the canvas can grow. */
+@media (min-width: 1400px){
+  #sidebar{width:280px}
+}
+@media (min-width: 1800px){
+  #sidebar{width:260px}
+}
+@media (min-width: 2200px){
+  #sidebar{width:240px}
+}
+
+#hud{display:block;pointer-events:auto;z-index:10}
+.hud-cards{display:flex;gap:10px;flex-direction:column;align-items:stretch}
+.hud-card{background:rgba(20,24,30,0.85);border:1px solid rgba(255,255,255,0.10);border-radius:12px;padding:10px 12px;backdrop-filter: blur(6px);max-width:100%}
+button{cursor:pointer;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.06);color:#e8edf2;padding:8px 10px}
+button:hover{background:rgba(255,255,255,0.10)}
+button:active{transform:translateY(1px)}
+button:disabled{opacity:0.4;cursor:not-allowed}
+.small{font-size:12px;opacity:0.85}
+
+/* Prevent cards from becoming too tall; keep buttons reachable. */
+.hud-card .card-scroll{max-height:240px;overflow:auto;padding-right:4px}
+
+/* Modal overlay (Help/Settings) */
+.hud-modal-overlay{position:fixed;left:0;top:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);z-index:999;pointer-events:auto}
+.hud-modal-overlay.hidden{display:none}
+.hud-modal{max-width:540px;width:calc(100vw - 48px);background:rgba(20,24,30,0.97);border:1px solid rgba(255,255,255,0.14);border-radius:16px;box-shadow:0 18px 60px rgba(0,0,0,0.45);padding:12px}
+.hud-modal-content{padding:4px 6px}
+input[type="range"]{accent-color:#e8edf2}
+hr{opacity:0.55}
+
+/* Toast */
+.hud-toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%) translateY(8px);opacity:0;transition:opacity 180ms ease, transform 180ms ease;pointer-events:none;z-index:1000;
+  background:rgba(20,24,30,0.92);border:1px solid rgba(255,255,255,0.14);border-radius:999px;padding:8px 12px;box-shadow:0 10px 30px rgba(0,0,0,0.35);max-width:min(680px, calc(100vw - 36px));
+  color:rgba(255,255,255,0.92);font-size:13px;line-height:1.2;text-align:center}
+.hud-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Battle log readability */
+.battle-log{display:flex;flex-direction:column;gap:4px}
+.log-line{display:flex;gap:6px;align-items:baseline;line-height:1.25}
+.log-ico{width:18px;opacity:0.85}
+.log-a,.log-b{font-weight:600}
+.log-muted{opacity:0.8}
+.log-amt{font-weight:800;letter-spacing:0.2px}
+.log-hit .log-amt{opacity:0.95}
+.log-heal .log-amt{opacity:0.95}
+.log-splash .log-amt{opacity:0.9}
