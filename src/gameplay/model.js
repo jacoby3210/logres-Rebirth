@@ -57,7 +57,7 @@ export function normalizeLoadedModel(model) {
 
   // Defensive normalization for corrupted / partial saves.
   // Keep the overworld wider; older saves may expand with empty extra columns.
-  model.world.cols = clampInt(model.world.cols, 24, 24, 60);
+  model.world.cols = clampInt(model.world.cols, 18, 18, 60);
   model.world.rows = clampInt(model.world.rows, 12, 1, 40);
   if (!model.world.tiles || typeof model.world.tiles !== 'object' || Array.isArray(model.world.tiles)) model.world.tiles = {};
 
@@ -92,7 +92,7 @@ export function normalizeLoadedModel(model) {
   model.hero.mp ??= 6;
   model.hero.mpMax ??= 6;
 
-  const cols = model.world.cols || 24;
+  const cols = model.world.cols || 18;
   const rows = model.world.rows || 12;
   model.hero.x = clampInt(model.hero.x, 1, 0, cols - 1);
   model.hero.y = clampInt(model.hero.y, 1, 0, rows - 1);

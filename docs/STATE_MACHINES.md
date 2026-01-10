@@ -1,39 +1,32 @@
-# Машина состояний
+# Машина состояний (актуально)
 
-## Title
-- enter: показать меню
-- action: start → Overworld
+FSM живет в `src/core/stateMachine.js`, регистрация состояний — в `src/core/game.js`.
 
-## Overworld
-- update: клики по соседним клеткам, трата MP
-- enter encounter → Battle(payload)
+## Список состояний
 
-## Battle
-- RTwP: cooldown tick
-- pause: выбор своего стэка и цели
-- end: победа → PostBattle(payload), поражение → GameOver
+- `title` — стартовое меню (новая игра/продолжить/сброс сейва)
+- `overworld` — исследование карты (квадратная сетка)
+- `event` — алтарь/руины/аномалия (всплывающее событие + фон-анимация)
+- `camp` — лагерь союзников (лечение/найм/бафы)
+- `echo` — «Эхо времени»
+- `battle` — бой (гексы 7×5), **строго пошаговый**: ход = движение (опционально) + действие (атака/лечение)
+- `postBattle` — окно результата боя (награды/переходы)
+- `gameOver` — поражение (с возможностью начать заново)
+- `victory` — победа над боссом
 
-## PostBattle
-- награды, VE/Gold, отчёт потерь
-- action: Continue → Overworld
-- action: Echo → Echo
-- if boss: Continue → Victory
+## Переходы
 
-## Echo
-- трата VE/Gold на эффекты "Эхо Времени"
-- action: Back → Overworld
+- `title` → `overworld`
+- `overworld` → `battle` (враг/элита/босс)
+- `overworld` → `event` (алтарь/руины/аномалия)
+- `overworld` → `camp`
+- `overworld` → `echo`
+- `battle` → `postBattle` (победа/поражение)
+- `postBattle` → `overworld` (после победы над enemy/elite)
+- `postBattle` → `victory` (после победы над boss)
+- `postBattle` → `gameOver` (после поражения)
+- Любое состояние: Help/Settings — модальные оверлеи поверх (не меняют FSM)
 
-## Camp
-- восстановление, найм, одноразовые баффы на следующий бой
-- action: Back → Overworld
-
-## GameOver
-- поражение завершает сессию, очистка сейва
-- action: Restart → Overworld (new run)
-
-## Victory
-- победа над боссом завершает сессию
-- action: Restart/Menu
-
-## Важно для расширения
-- PostBattle как отдельное состояние позволит сделать выбор «Эхо» после боёв без захламления BattleState.
+## UX-заметки
+- В `overworld` шаг возможен только на соседнюю клетку (1 MP), «Конец хода» восстанавливает MP.
+- В `battle` на ходе юнита подсвечивается радиус движения (если движение не потрачено). Возможен ход → затем действие.
