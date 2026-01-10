@@ -6,7 +6,7 @@
 ## Как запустить
 
 ### Вариант A — Перейдите по ссылке (самый простой)
-
+https://mralstark.github.io/logres-Rebirth/
 
 ### Вариант B — Python 
 1) Откройте PowerShell/Terminal в папке проекта (там где `index.html`).
