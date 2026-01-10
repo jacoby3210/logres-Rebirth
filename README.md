@@ -4,22 +4,7 @@
 Запускается без сборки.
 
 ## Быстрый запуск
-> Нужен локальный сервер (из-за ES modules).
 
-### Вариант A (Python)
-```bash
-cd logres-rebirth-stage2
-python -m http.server 8000
-```
-Откройте в браузере: `http://localhost:8000`
-
-> Windows 10: если команда `python` не найдена, попробуйте `py -m http.server 8000`.
-
-### Вариант B (Node)
-```bash
-cd logres-rebirth-stage2
-npx serve .
-```
 
 ## Управление
 - Клик по **соседней клетке** — шаг (1 MP).
